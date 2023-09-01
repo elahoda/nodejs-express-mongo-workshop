@@ -36,7 +36,7 @@ promotionRouter
     cors.corsWithOptions,
     authenticate.verifyUser,
     authenticate.verifyAdmin,
-    (req, res, next) => {
+    (req, res) => {
       res.statusCode = 403;
       res.end("PUT operation not supported on /promotions");
     }
@@ -58,7 +58,8 @@ promotionRouter
 
 promotionRouter
   .route("/:promotionId")
-  .get((req, res, next) => {
+  .options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+  .get(cors.cors, (req, res, next) => {
     Promotion.findById(req.params.promotionId)
       .then((promotion) => {
         res.statusCode = 200;

@@ -36,7 +36,7 @@ partnerRouter
     cors.corsWithOptions,
     authenticate.verifyUser,
     authenticate.verifyAdmin,
-    (req, res, next) => {
+    (req, res) => {
       res.statusCode = 403;
       res.end("PUT operation not supported on /partners");
     }
@@ -58,7 +58,8 @@ partnerRouter
 
 partnerRouter
   .route("/:partnerId")
-  .get((req, res, next) => {
+  .options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
+  .get(cors.cors, (req, res, next) => {
     Partner.findById(req.params.partnerId)
       .then((partner) => {
         res.statusCode = 200;
@@ -71,7 +72,7 @@ partnerRouter
     cors.corsWithOptions,
     authenticate.verifyUser,
     authenticate.verifyAdmin,
-    (req, res, next) => {
+    (req, res) => {
       res.statusCode = 403;
       res.end(
         `POST operation not supported on /partners/${req.params.partnerId}`

@@ -12,6 +12,8 @@ const promotionRouter = require("./routes/promotionRouter");
 const partnerRouter = require("./routes/partnerRouter");
 const uploadRouter = require("./routes/uploadRouter");
 
+const cors = require("./routes/cors");
+
 const passport = require("passport");
 const config = require("./config");
 
